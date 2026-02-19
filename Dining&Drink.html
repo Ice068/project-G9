@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dining & Drink - Eclipse</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="dining.css">
+</head>
+
+<body>
+
+<nav class="hero-navbar">
+    <div class="nav-container">
+        <div class="container-fluid px-5">
+    <a href="index.html" class="logo">ECLIPSE</a>
+
+        <div class="nav-menu">
+            <a href="#">History</a>
+            <a href="#">Visit Us</a>
+            <a href="Dining&Drink.html">Dining & Drinks</a>
+            <a href="Reserve Your Table.html" class="reserve-btn">RESERVATIONS</a>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Content -->
+<div class="container">
+
+    <!-- Title -->
+    <div class="page-title">Dining & Drink</div>
+
+    <!-- Buttons -->
+    <div class="btn-section">
+        <button class="btn btn-dining active" onclick="showDining()">Dining</button>
+        <button class="btn btn-bar" onclick="showBar()">The Bar</button>
+    </div>
+
+    <!-- Menu Section -->
+    <div class="menu-box">
+        <div class="row align-items-center">
+
+            <div class="col-md-7 text-start">
+                <h3 id="menuTitle" class="mb-4">Dining</h3>
+                <div id="menuContent"></div>
+            </div>
+
+            <div class="col-md-5">
+                <img id="menuImage" src="" class="food-img">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript for Menu -->
+<script>
+function showDining(){
+    document.getElementById("menuTitle").innerText = "Dining";
+    document.getElementById("menuImage").src =
+        "https://images.unsplash.com/photo-1544025162-d76694265947";
+    document.getElementById("menuContent").innerHTML = `
+        <div class="menu-item"><span>Fish & Chips</span><span>150 บาท</span></div>
+        <div class="menu-item"><span>Grilled Salmon</span><span>225 บาท</span></div>
+        <div class="menu-item"><span>Tom Yum</span><span>100 บาท</span></div>
+        <div class="menu-item"><span>Truffle Steak</span><span>290 บาท</span></div>
+    `;
+
+    // active button
+    document.querySelector('.btn-dining').classList.add('active');
+    document.querySelector('.btn-bar').classList.remove('active');
+}
+
+function showBar(){
+    document.getElementById("menuTitle").innerText = "The Bar";
+    document.getElementById("menuImage").src =
+        "https://images.unsplash.com/photo-1514361892635-cebbdd4a0e6c";
+    document.getElementById("menuContent").innerHTML = `
+        <div class="menu-item"><span>Classic Martini</span><span>120 บาท</span></div>
+        <div class="menu-item"><span>Whiskey Sour</span><span>140 บาท</span></div>
+        <div class="menu-item"><span>Mojito</span><span>130 บาท</span></div>
+        <div class="menu-item"><span>Signature Cocktail</span><span>160 บาท</span></div>
+    `;
+
+    document.querySelector('.btn-bar').classList.add('active');
+    document.querySelector('.btn-dining').classList.remove('active');
+}
+
+// initial load
+showDining();
+
+/* navbar scroll effect */
+window.addEventListener("scroll", function(){
+    const nav = document.querySelector(".hero-navbar");
+    nav.classList.toggle("scrolled", window.scrollY > 50);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c') center/cover no-repeat;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    color:white;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+}
+
+.form-box{
+    position:relative;
+    z-index:2;
+    width:600px;
+    padding:50px;
+    border:2px solid gold;
+    border-radius:20px;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(8px);
+}
+
+.title{
+    font-family:'Playfair Display', serif;
+    font-size:48px;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.form-control{
+    background:transparent;
+    border:1px solid gold;
+    color:white;
+}
+
+.form-control:focus{
+    background:transparent;
+    border-color:gold;
+    box-shadow:none;
+    color:white;
+}
+
+.form-label{
+    color:gold;
+}
+
+.btn-gold{
+    border:2px solid gold;
+    background:transparent;
+    color:gold;
+    border-radius:30px;
+    padding:10px;
+    transition:0.3s;
+}
+
+.btn-gold:hover{
+    background:gold;
+    color:black;
+}
+.back-btn{
+    position:absolute;
+    top:30px;
+    left:30px;
+    border:2px solid gold;
+    padding:6px 20px;
+    border-radius:30px;
+    color:gold;
+    text-decoration:none;
+    z-index:3;
+}
+
+.back-btn:hover{
+    background:gold;
+    color:black;
+}
+
+/* ===== Navbar Base ===== */
+.custom-navbar{
+    transition:0.4s ease;
+    padding:20px 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+}
+
+.nav-scrolled{
+    background: rgba(0,0,0,0.95) !important;
+    padding:12px 0;
+}
+
+/* ===== Logo ===== */
+.logo{
+    font-family:'Playfair Display', serif;
+    font-size:48px;
+    color:white;
+    letter-spacing:4px;
+    transition:0.3s;
+}
+
+.logo:hover{
+    color:gold;
+}
+
+/* ===== Menu Link ===== */
+.menu-link{
+    position:relative;
+    color:white;
+    font-family:'Playfair Display', serif;
+    font-size:20px;
+    letter-spacing:2px;
+    transition:0.3s;
+}
+
+/* เส้นทองวิ่ง */
+.menu-link::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:0%;
+    height:2px;
+    background:gold;
+    transition:0.4s ease;
+}
+
+.menu-link:hover{
+    color:gold;
+}
+
+.menu-link:hover::after{
+    width:100%;
+}
+
+/* Active menu */
+.active-link{
+    color:gold !important;
+}
+
+.active-link::after{
+    width:100%;
+}
+
+/* ===== Reservation Button ===== */
+.reservation-btn{
+    border:2px solid gold;
+    color:gold;
+    padding:8px 30px;
+    border-radius:50px;
+    font-family:'Playfair Display', serif;
+    letter-spacing:2px;
+    transition:0.3s;
+}
+
+.reservation-btn:hover{
+    background:gold;
+    color:black;
+    box-shadow:0 0 15px gold;
+}
+
+/* ===== Mobile Style ===== */
+@media(max-width:991px){
+
+    .custom-navbar{
+        background:black;
+    }
+
+    .menu-link{
+        display:block;
+        padding:15px 0;
+    }
+
+    .reservation-btn{
+        width:80%;
+    }
+}
+
+/* กันเนื้อหาโดน navbar ทับ */
+body{
+    padding-top:130px;
+}

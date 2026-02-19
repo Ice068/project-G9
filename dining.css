@@ -1,0 +1,267 @@
+/* ============================= */
+/* RESET */
+/* ============================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0e0e10;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+
+/* ============================= */
+/* NAVBAR */
+/* ============================= */
+
+.hero-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 28px 60px;
+    z-index: 1000;
+    transition: 0.4s ease;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("your-image.jpg") center/cover no-repeat;
+
+    backdrop-filter: blur(6px);
+}
+
+/* Scroll Effect */
+.hero-navbar.scrolled {
+    background: rgba(0, 0, 0, 0.95);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO */
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    letter-spacing: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.logo:hover {
+    color: #f5c518;
+}
+
+/* MENU */
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #f5c518;
+}
+
+/* RESERVATION BUTTON */
+
+.reserve-btn {
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: 2px solid #f5c518;
+    color: #f5c518;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+}
+
+.reserve-btn:hover {
+    background: #f5c518;
+    color: #000;
+}
+
+
+/* ============================= */
+/* PAGE CONTENT */
+/* ============================= */
+
+.container {
+    padding: 160px 80px 80px 80px;
+}
+
+.page-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+/* Gold underline */
+
+.page-title::after {
+    content: "";
+    width: 80px;
+    height: 2px;
+    background: #f5c518;
+    display: block;
+    margin: 20px auto 0;
+}
+
+
+/* ============================= */
+/* BUTTON SECTION */
+/* ============================= */
+
+.btn-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.btn-dining,
+.btn-bar {
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: 1px solid #f5c518;
+    background: transparent;
+    color: #f5c518;
+    margin: 0 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-dining.active,
+.btn-bar.active,
+.btn-dining:hover,
+.btn-bar:hover {
+    background: #f5c518;
+    color: #000;
+}
+
+
+/* ============================= */
+/* MENU BOX */
+/* ============================= */
+
+.menu-box {
+    background: #1b1b1f;
+    border-radius: 20px;
+    padding: 60px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.7);
+    max-width: 1000px;
+    margin: auto;
+}
+
+#menuTitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+
+/* ============================= */
+/* IMAGE STYLE */
+/* ============================= */
+
+.food-img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    margin-bottom: 50px;
+}
+
+
+/* ============================= */
+/* FOOTER */
+/* ============================= */
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    background: #0a0a0c;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 992px) {
+
+    .container {
+        padding: 140px 40px 60px 40px;
+    }
+
+    .page-title {
+        font-size: 36px;
+    }
+
+    .menu-box {
+        padding: 40px;
+    }
+
+    .nav-menu {
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .hero-navbar {
+        padding: 20px 30px;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    .container {
+        padding: 120px 20px 60px 20px;
+    }
+
+    .menu-box {
+        padding: 25px;
+    }
+}
