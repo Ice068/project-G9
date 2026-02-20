@@ -1,0 +1,195 @@
+/* ========================
+   RESET
+======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================
+   BODY + BACKGROUND
+======================== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
+                url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* ========================
+   NAVBAR
+======================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 80px;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    letter-spacing: 4px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.nav-links a {
+    margin-left: 40px;
+    text-decoration: none;
+    color: #cccccc;
+    font-weight: 400;
+    position: relative;
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #d4af37;
+}
+
+.nav-links a.active {
+    color: #d4af37;
+}
+
+.nav-links a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 2px;
+    background: #d4af37;
+}
+
+/* ========================
+   HERO
+======================== */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    margin-bottom: 40px;
+    letter-spacing: 3px;
+}
+
+/* ========================
+   GLASS FORM BOX
+======================== */
+.history-box {
+    width: 450px;
+    padding: 50px 40px;
+    border-radius: 20px;
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(20px);
+
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+}
+
+.history-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+/* ========================
+   FORM
+======================== */
+.form-group {
+    margin-bottom: 22px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #d4af37;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 2px solid #d4af37;
+    background: transparent;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    box-shadow: 0 0 10px rgba(212,175,55,0.6);
+}
+
+/* ========================
+   BUTTON
+======================== */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border-radius: 40px;
+    border: 2px solid #d4af37;
+    background: transparent;
+    color: #d4af37;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.submit-btn:hover {
+    background: #d4af37;
+    color: black;
+    box-shadow: 0 0 20px rgba(212,175,55,0.6);
+}
+
+/* ========================
+   MESSAGE
+======================== */
+#formMessage {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* ========================
+   RESPONSIVE
+======================== */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 20px 30px;
+    }
+
+    .nav-links a {
+        margin-left: 20px;
+        font-size: 14px;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .history-box {
+        width: 90%;
+        padding: 35px 25px;
+    }
+}
