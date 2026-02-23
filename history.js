@@ -1,44 +1,58 @@
-document.getElementById("historyForm").addEventListener("submit", async function(e) {
+document.addEventListener("DOMContentLoaded", function () {
 
-    e.preventDefault(); // ไม่ให้รีโหลดหน้า
-
-    const reserveNumber = document.getElementById("reserveNumber").value;
-    const otp = document.getElementById("otp").value;
+    const form = document.getElementById("historyForm");
     const message = document.getElementById("formMessage");
 
-    message.innerText = "Processing...";
-    message.style.color = "white";
+    form.addEventListener("submit", async function (e) {
 
-    try {
+        e.preventDefault();
 
-        const response = await fetch("http://localhost:3000/api/history", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                reserveNumber: reserveNumber,
-                otp: otp
-            })
-        });
+        const reserveNumber = document.getElementById("reserveNumber").value.trim();
+        const otp = document.getElementById("otp").value.trim();
 
-        const data = await response.json();
+        // ตรวจสอบก่อนส่ง
+        if (!reserveNumber || !otp) {
+            message.innerText = "Please fill in all fields.";
+            message.style.color = "red";
+            return;
+        }
 
-        if(response.ok){
-            message.innerText = "Reservation verified successfully!";
-            message.style.color = "#d4af37";
+        message.innerText = "Processing...";
+        message.style.color = "white";
 
-            // ตัวอย่าง: redirect
-            // window.location.href = "reservation-details.html";
+        try {
 
-        } else {
-            message.innerText = data.message || "Invalid reserve number or OTP";
+            const response = await fetch("http://localhost:3000/api/history", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ reserveNumber, otp })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+
+                message.innerText = "Reservation verified successfully!";
+                message.style.color = "#d4af37";
+
+                // ถ้าจะ redirect ไปหน้ารายละเอียด
+                // window.location.href = `reservation-details.html?id=${data._id}`;
+
+            } else {
+
+                message.innerText = data.message || "Invalid reserve number or OTP";
+                message.style.color = "red";
+            }
+
+        } catch (error) {
+
+            console.error(error);
+            message.innerText = "Server error. Please try again.";
             message.style.color = "red";
         }
 
-    } catch (error) {
-        message.innerText = "Server error. Please try again.";
-        message.style.color = "red";
-    }
+    });
 
 });
