@@ -8,10 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         const reserveNumber = document.getElementById("reserveNumber").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
         const otp = document.getElementById("otp").value.trim();
 
         // ตรวจสอบก่อนส่ง
-        if (!reserveNumber || !otp) {
+        if (!reserveNumber || !email || !phone || !otp) {
             message.innerText = "Please fill in all fields.";
             message.style.color = "red";
             return;
@@ -27,7 +29,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ reserveNumber, otp })
+                body: JSON.stringify({ 
+                    reserveNumber,
+                    email,
+                    phone,
+                    otp
+                })
             });
 
             const data = await response.json();
@@ -42,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             } else {
 
-                message.innerText = data.message || "Invalid reserve number or OTP";
+                message.innerText = data.message || "Invalid information";
                 message.style.color = "red";
             }
 

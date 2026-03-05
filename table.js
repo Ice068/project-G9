@@ -19,12 +19,30 @@ document.getElementById("reservationForm").addEventListener("submit", function(e
 
 e.preventDefault()
 
+let fullname = document.getElementById("fullname").value.trim()
+let email = document.getElementById("email").value.trim()
+let phone = document.getElementById("phone").value.trim()
 let date = document.getElementById("date").value
 let time = document.getElementById("time").value
 let guests = document.getElementById("guests").value
 
 let selectedYear = new Date(date).getFullYear()
 let currentYear = new Date().getFullYear()
+
+/* ตรวจสอบข้อมูลว่าง */
+
+if(!fullname || !email || !phone || !date || !time || !guests){
+alert("Please fill in all fields")
+return
+}
+
+/* ตรวจสอบ email format */
+
+let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+if(!email.match(emailPattern)){
+alert("Please enter a valid email address")
+return
+}
 
 /* ป้องกันจองย้อนหลัง */
 
@@ -61,9 +79,9 @@ alert("Sorry, all tables are fully booked")
 return
 }
 
-  /* ทำการจอง */
+/* ทำการจอง */
 
-  reservedTables++
+reservedTables++
 
 document.getElementById("tableCount").innerText = totalTables - reservedTables
 
