@@ -1,44 +1,56 @@
+/* ===== Body ===== */
 body{
     margin:0;
     font-family:'Poppins', sans-serif;
     background:url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c') center/cover no-repeat;
-    height:100vh;
+    min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
     position:relative;
     color:white;
+    padding-top:120px; /* กัน navbar ทับ */
 }
 
-body::after{
+/* Overlay */
+body::before{
     content:"";
     position:absolute;
     inset:0;
     background:rgba(0,0,0,0.75);
+    z-index:0;
 }
 
+/* ===== Form Box ===== */
 .form-box{
     position:relative;
     z-index:2;
-    width:600px;
-    padding:50px;
+    width:100%;
+    max-width:600px;
+    padding:45px;
     border:2px solid gold;
     border-radius:20px;
     background:rgba(0,0,0,0.6);
     backdrop-filter:blur(8px);
 }
 
+/* Title */
 .title{
     font-family:'Playfair Display', serif;
-    font-size:48px;
+    font-size:42px;
     text-align:center;
     margin-bottom:30px;
 }
 
+/* ===== Form ===== */
 .form-control{
     background:transparent;
     border:1px solid gold;
     color:white;
+}
+
+.form-control::placeholder{
+    color:#ccc;
 }
 
 .form-control:focus{
@@ -52,19 +64,24 @@ body::after{
     color:gold;
 }
 
+/* ===== Button ===== */
 .btn-gold{
     border:2px solid gold;
     background:transparent;
     color:gold;
     border-radius:30px;
-    padding:10px;
+    padding:12px;
+    font-weight:500;
     transition:0.3s;
 }
 
 .btn-gold:hover{
     background:gold;
     color:black;
+    box-shadow:0 0 10px gold;
 }
+
+/* ===== Back Button ===== */
 .back-btn{
     position:absolute;
     top:30px;
@@ -82,7 +99,7 @@ body::after{
     color:black;
 }
 
-/* ===== Navbar Base ===== */
+/* ===== Navbar ===== */
 .custom-navbar{
     transition:0.4s ease;
     padding:20px 0;
@@ -95,10 +112,10 @@ body::after{
     padding:12px 0;
 }
 
-/* ===== Logo ===== */
+/* Logo */
 .logo{
     font-family:'Playfair Display', serif;
-    font-size:48px;
+    font-size:44px;
     color:white;
     letter-spacing:4px;
     transition:0.3s;
@@ -108,7 +125,7 @@ body::after{
     color:gold;
 }
 
-/* ===== Menu Link ===== */
+/* ===== Menu ===== */
 .menu-link{
     position:relative;
     color:white;
@@ -118,7 +135,7 @@ body::after{
     transition:0.3s;
 }
 
-/* เส้นทองวิ่ง */
+/* เส้นวิ่ง */
 .menu-link::after{
     content:"";
     position:absolute;
@@ -138,7 +155,7 @@ body::after{
     width:100%;
 }
 
-/* Active menu */
+/* Active */
 .active-link{
     color:gold !important;
 }
@@ -161,10 +178,10 @@ body::after{
 .reservation-btn:hover{
     background:gold;
     color:black;
-    box-shadow:0 0 15px gold;
+    box-shadow:0 0 12px gold;
 }
 
-/* ===== Mobile Style ===== */
+/* ===== Mobile ===== */
 @media(max-width:991px){
 
     .custom-navbar{
@@ -173,15 +190,18 @@ body::after{
 
     .menu-link{
         display:block;
-        padding:15px 0;
+        padding:12px 0;
     }
 
     .reservation-btn{
         width:80%;
     }
-}
 
-/* กันเนื้อหาโดน navbar ทับ */
-body{
-    padding-top:130px;
+    .form-box{
+        padding:35px;
+    }
+
+    .title{
+        font-size:32px;
+    }
 }

@@ -175,7 +175,7 @@ body{
 .submit-btn{
     width:100%;
     padding:14px;
-    margin-top:15px;
+    margin-top:20px;
     border-radius:40px;
     border:1px solid #d4af37;
     background:transparent;
@@ -216,4 +216,36 @@ body{
     .history-box{
         padding:35px 25px;
     }
+}
+
+/* ========================
+   OTP BUTTON
+======================== */
+
+.otp-row{
+    display:flex;
+    gap:10px;
+}
+
+.otp-row input{
+    flex:1;
+}
+
+.otp-btn{
+    padding:12px 18px;
+    border-radius:8px;
+    border:1px solid #d4af37;
+    background:transparent;
+    color:#d4af37;
+    font-size:12px;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:0.3s ease;
+    white-space:nowrap;
+}
+
+.otp-btn:hover{
+    background:#d4af37;
+    color:black;
+    box-shadow:0 0 10px rgba(212,175,55,0.6);
 }
