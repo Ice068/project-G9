@@ -145,25 +145,51 @@ body{
     backdrop-filter:blur(10px);
 }
 
-/* Menu Items */
-.menu-item{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid rgba(212,175,55,0.2);
+/* Title */
+.menu-box h2{
+    font-size:32px;
+    margin-bottom:30px;
+    font-family:'Playfair Display', serif;
 }
 
+/* ========================
+   MENU ITEM
+======================== */
+.menu-item{
+    display:flex;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid rgba(212,175,55,0.3);
+    transition:0.3s;
+}
+
+/* เอาเส้นออกตัวสุดท้าย */
 .menu-item:last-child{
     border-bottom:none;
 }
 
-/* Image */
-.food-img{
-    width:100%;
-    border-radius:15px;
-    border:2px solid #d4af37;
-    box-shadow:0 0 25px rgba(212,175,55,0.3);
+/* ชื่ออาหาร */
+.menu-item span:first-child{
+    flex:1;
+    text-align:center;
+    font-size:18px;
 }
+
+/* ราคา */
+.menu-item span:last-child{
+    min-width:100px;
+    text-align:right;
+    font-size:16px;
+    opacity:0.8;
+}
+
+/* Hover effect */
+.menu-item:hover{
+    color:#d4af37;
+    transform:translateX(5px);
+    text-shadow:0 0 10px rgba(212,175,55,0.7);
+}
+
 
 /* ========================
    RESPONSIVE

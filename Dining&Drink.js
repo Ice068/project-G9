@@ -1,7 +1,5 @@
 function showDining(){
     document.getElementById("menuTitle").innerText = "Dining";
-    document.getElementById("menuImage").src =
-        "https://images.unsplash.com/photo-1544025162-d76694265947";
     document.getElementById("menuContent").innerHTML = `
         <div class="menu-item"><span>Fish & Chips</span><span>150 บาท</span></div>
         <div class="menu-item"><span>Grilled Salmon</span><span>225 บาท</span></div>
@@ -16,8 +14,6 @@ function showDining(){
 
 function showBar(){
     document.getElementById("menuTitle").innerText = "The Bar";
-    document.getElementById("menuImage").src =
-        "https://images.unsplash.com/photo-1510626176961-4bfb1a6cbbbd";
     document.getElementById("menuContent").innerHTML = `
         <div class="menu-item"><span>Classic Martini</span><span>120 บาท</span></div>
         <div class="menu-item"><span>Whiskey Sour</span><span>140 บาท</span></div>
