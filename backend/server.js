@@ -63,7 +63,7 @@ app.delete("/api/reservations/:id", (req, res) => {
 });
 
 // ============================
-// POST - ตรวจสอบ history (history_con.js)
+// POST - ตรวจสอบ history
 // ============================
 
 app.post("/api/history", (req, res) => {
