@@ -13,12 +13,24 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         // ==========================================
         
         // ชั่วคราว: กำหนดรหัสผ่านจำลองคือ admin / 1234
-        if (user === "admin" && pass === "1234") {
-            const fakeToken = "dummy-jwt-token-from-backend";
-            localStorage.setItem('adminToken', fakeToken); // เก็บกุญแจ
-            window.location.href = 'index.html'; // พาไปหน้า Dashboard
+            const res = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: user,
+                password: pass
+            })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            localStorage.setItem('adminToken', data.token);
+            window.location.href = 'index.html';
         } else {
-            errorBox.classList.remove('d-none'); // รหัสผิด
+            errorBox.classList.remove('d-none');
         }
 
     } catch (error) {

@@ -31,7 +31,7 @@ if(btnLogout) {
 // 📡 3. Data Fetching (ดึงข้อมูลแบบ Real-time)
 // ==========================================
 // 📍 [รอ Backend] ใส่ URL ตรงนี้เมื่อ Backend พร้อม 
-const API_URL = ""; 
+const API_URL = "http://localhost:3000/dashboard";
 
 let lineChartInstance = null;
 let barChartInstance = null;
