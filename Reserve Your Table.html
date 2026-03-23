@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservation - Eclipse</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="table.css">
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+<div class="container-fluid px-5">
+
+<a class="navbar-brand logo" href="index.html">ECLIPSE</a>
+
+<button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+<ul class="navbar-nav align-items-center gap-lg-4 text-center">
+
+<li class="nav-item">
+<a class="nav-link menu-link" href="history.html">History</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link menu-link" href="visit-us.html">VISIT US</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link menu-link" href="Dining&Drink.html">DINING & DRINKS</a>
+</li>
+
+<li class="nav-item mt-3 mt-lg-0">
+<a class="btn reservation-btn active-link" href="#">RESERVATIONS</a>
+</li>
+
+</ul>
+</div>
+</div>
+</nav>
+
+<a href="javascript:history.back()" class="back-btn">← Back</a>
+
+<div class="form-box">
+
+<div class="title">Reservation</div>
+
+<!-- แสดงโต๊ะว่าง -->
+<div class="alert alert-success text-center">
+Available Tables: <b id="tableCount">10</b>
+</div>
+
+<form id="reservationForm">
+
+<div class="mb-3">
+<label class="form-label">Full Name</label>
+<input type="text" id="fullname" class="form-control" required>
+</div>
+
+<!-- เพิ่ม EMAIL -->
+<div class="mb-3">
+<label class="form-label">Email</label>
+<input type="email" id="email" class="form-control" placeholder="example@email.com" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Password</label>
+<input type="password" id="password" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Confirm Password</label>
+<input type="password" id="confirmPassword" class="form-control" required>
+</div>
+
+<div class="row">
+<div class="col-md-6 mb-3">
+<label class="form-label">Date</label>
+<input type="date" id="date" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Time</label>
+<input type="time" id="time" class="form-control" required>
+</div>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Number of Guests</label>
+<input type="number" id="guests" class="form-control" min="1" max="10" required>
+</div>
+
+<div class="mb-4">
+<label class="form-label">Special Request</label>
+<textarea id="note" class="form-control"></textarea>
+</div>
+
+<button type="submit" class="btn btn-gold w-100">
+Confirm Reservation
+</button>
+
+</form>
+</div>
+
+<script src="table.js" defer></script>
+
+</body>
+</html>
