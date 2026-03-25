@@ -42,11 +42,7 @@ window.onload = function () {
       note
     };
 
-    console.log("📤 ส่งข้อมูล:", data);
-
     try {
-      console.log("🚀 กำลังยิงไป server...");
-
       const res = await fetch("http://localhost:3000/reserve", {
         method: "POST",
         headers: {
@@ -55,10 +51,13 @@ window.onload = function () {
         body: JSON.stringify(data)
       });
 
-      console.log("📡 status:", res.status);
-
       const result = await res.json();
-      console.log("🎉 result:", result);
+
+      // 🔥 ตรงนี้คือหัวใจ
+      if (!res.ok) {
+        alert(result.message); // ❌ ซ้ำ → แจ้งเตือน
+        return;
+      }
 
       alert("✅ จองสำเร็จ!");
 

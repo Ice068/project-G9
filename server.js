@@ -5,28 +5,28 @@ const path = require("path");
 
 const app = express();
 
-// Serve static files จาก current directory
+// ==========================
+// ✅ MIDDLEWARE
+// ==========================
 app.use(express.static(path.join(__dirname)));
+app.use(express.json());
 
-// debug ทุก request
-app.use((req, res, next) => {
-  console.log("🌍 มี request เข้า:", req.method, req.url, new Date().toLocaleTimeString());
-  if (req.body) {
-    console.log("📨 Body:", req.body);
-  }
-  next();
-});
-
-// CORS
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
 
-app.use(express.json());
+// debug
+app.use((req, res, next) => {
+  console.log("🌍", req.method, req.url);
+  console.log("📨 Body:", req.body);
+  next();
+});
 
-// สร้าง connection สำหรับ MySQL (ไม่ใช้ pool)
+// ==========================
+// ✅ DATABASE
+// ==========================
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -37,13 +37,10 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) {
     console.log("❌ DB Error:", err);
-    setTimeout(() => {
-      console.log("🔄 Retrying connection...");
-      db.connect();
-    }, 3000);
   } else {
     console.log("✅ Connected to MySQL");
-    
+
+    // users
     db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,105 +48,141 @@ db.connect((err) => {
         email VARCHAR(255),
         password VARCHAR(255)
       )
-    `, (err) => {
-      if (err) console.log("❌ Create users table error:", err.message);
-    });
-    
+    `);
+
+    // reservations (🔥 เพิ่ม status)
     db.query(`
       CREATE TABLE IF NOT EXISTS reservations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT,
-        date VARCHAR(255),
-        time VARCHAR(255),
+        date VARCHAR(50),
+        time VARCHAR(50),
         guests INT,
         note TEXT,
+        status VARCHAR(50) DEFAULT 'active',
         FOREIGN KEY (user_id) REFERENCES users(id)
       )
-    `, (err) => {
-      if (err) console.log("❌ Create reservations table error:", err.message);
-    });
+    `);
   }
 });
 
-// test route
+// ==========================
+// ✅ ROUTES
+// ==========================
+
+// หน้าแรก
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// API ดูข้อมูลทั้งหมด
+// ==========================
+// ✅ GET DATA (🔥 เพิ่ม status)
+// ==========================
 app.get("/data", (req, res) => {
   db.query(`
     SELECT
-      r.*,
+      r.id,
       COALESCE(u.fullname, '(ไม่มีชื่อ)') AS fullname,
-      COALESCE(u.email, '(ไม่มีอีเมล)') AS email
+      COALESCE(u.email, '(ไม่มีอีเมล)') AS email,
+      r.date,
+      r.time,
+      r.guests,
+      r.note,
+      r.status
     FROM reservations r
     LEFT JOIN users u ON r.user_id = u.id
+    ORDER BY r.id DESC
   `, (err, rows) => {
     if (err) {
-      return res.json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
     res.json(rows);
   });
 });
 
-// API จองโต๊ะ
+// ==========================
+// ✅ 🔥 RESERVE (กันซ้ำ)
+// ==========================
 app.post("/reserve", (req, res) => {
-  console.log("\n");
-  console.log("========================================");
-  console.log("🔥🔥🔥 POST /reserve ได้รับ request แล้ว 🔥🔥🔥");
-  console.log("========================================");
-  console.log("req.body:", JSON.stringify(req.body, null, 2));
-
   const { fullname, email, password, date, time, guests, note } = req.body;
 
-  if (!fullname || !email || !password) {
-    console.log("❌ ข้อมูลไม่ครบ");
-    return res.status(400).json({ message: "ข้อมูลไม่ครบ" });
+  if (!fullname || !email || !password || !date || !time) {
+    return res.status(400).json({ message: "❌ ข้อมูลไม่ครบ" });
   }
 
-  console.log("✅ ข้อมูลครบ - เริ่มเพิ่มข้อมูล");
-  console.log("📝 fullname:", fullname);
-  console.log("📝 email:", email);
-  console.log("📝 date:", date);
-  console.log("📝 time:", time);
-  console.log("📝 guests:", guests);
+  // เช็คจองซ้ำ
+  const checkSql = `
+    SELECT * FROM reservations
+    WHERE date = ? AND time = ? AND status = 'active'
+  `;
 
-  // เพิ่ม user ก่อน
-  const userSql = "INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)";
-  console.log("💾 ยิง SQL user:", userSql);
-  
-  db.query(userSql, [fullname, email, password], function(err, result) {
+  db.query(checkSql, [date, time], (err, rows) => {
     if (err) {
-      console.log("❌❌❌ ERROR ตอนเพิ่ม user:", err.message);
-      console.log("❌ Error code:", err.code);
-      console.log("❌ SQL:", err.sql);
-      return res.status(500).json({ message: "เพิ่ม user ไม่สำเร็จ", error: err.message });
+      return res.status(500).json({ message: "DB error" });
     }
 
-    const userId = result.insertId;
-    console.log("✅ User เพิ่มสำเร็จ! userId =", userId);
+    if (rows.length > 0) {
+      return res.status(400).json({
+        message: "❌ เวลานี้ถูกจองไปแล้ว"
+      });
+    }
 
-    // เพิ่ม reservation
-    const reserveSql = "INSERT INTO reservations (user_id, date, time, guests, note) VALUES (?, ?, ?, ?, ?)";
-    console.log("💾 ยิง SQL reservation:", reserveSql);
-    
-    db.query(reserveSql, [userId, date, time, parseInt(guests), note], function(err) {
+    // เพิ่ม user
+    const userSql = `
+      INSERT INTO users (fullname, email, password)
+      VALUES (?, ?, ?)
+    `;
+
+    db.query(userSql, [fullname, email, password], (err, result) => {
       if (err) {
-        console.log("❌❌❌ ERROR ตอนเพิ่ม reservation:", err.message);
-        console.log("❌ Error code:", err.code);
-        console.log("❌ SQL:", err.sql);
-        return res.status(500).json({ message: "จองโต๊ะไม่สำเร็จ", error: err.message });
+        return res.status(500).json({ message: "เพิ่ม user ไม่สำเร็จ" });
       }
 
-      console.log("✅✅✅ Reservation เพิ่มสำเร็จ!");
-      console.log("========================================\n");
-      res.status(200).json({ message: "Reservation success! 🎉" });
+      const userId = result.insertId;
+
+      // เพิ่ม reservation
+      const reserveSql = `
+        INSERT INTO reservations (user_id, date, time, guests, note)
+        VALUES (?, ?, ?, ?, ?)
+      `;
+
+      db.query(
+        reserveSql,
+        [userId, date, time, parseInt(guests), note],
+        (err) => {
+          if (err) {
+            return res.status(500).json({ message: "จองไม่สำเร็จ" });
+          }
+
+          res.json({ message: "✅ จองสำเร็จ!" });
+        }
+      );
     });
   });
 });
 
-// run server
+// ==========================
+// ✅ 🔥 CANCEL (ยกเลิก)
+// ==========================
+app.post("/cancel/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.query(
+    "UPDATE reservations SET status = 'cancelled' WHERE id = ?",
+    [id],
+    (err) => {
+      if (err) {
+        return res.status(500).json({ message: "❌ ยกเลิกไม่สำเร็จ" });
+      }
+
+      res.json({ message: "✅ ยกเลิกการจองแล้ว" });
+    }
+  );
+});
+
+// ==========================
+// ✅ START SERVER
+// ==========================
 app.listen(3000, () => {
   console.log("🚀 Server running on http://localhost:3000");
 });
