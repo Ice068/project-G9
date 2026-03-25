@@ -1,0 +1,96 @@
+// ==========================
+// ✅ LOAD DATA
+// ==========================
+async function loadReservations() {
+  const table = document.getElementById("table-orders");
+
+  try {
+    const res = await fetch("http://localhost:3000/data");
+
+    if (!res.ok) throw new Error("โหลดไม่ได้");
+
+    const data = await res.json();
+
+    table.innerHTML = "";
+
+    // 🔥 นับสถิติ
+    let totalOrders = data.length;
+    let totalUsers = new Set(data.map(r => r.email)).size;
+
+    document.getElementById("stat-orders").innerText = totalOrders;
+    document.getElementById("stat-users").innerText = totalUsers;
+
+    // connection status
+    document.getElementById("connection-status").innerText = "Connected";
+    document.getElementById("connection-status").classList.remove("bg-danger");
+    document.getElementById("connection-status").classList.add("bg-success");
+
+    // 🔥 render table
+    data.forEach((r, i) => {
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${i + 1}</td>
+        <td>${r.fullname}</td>
+        <td>${r.date}</td>
+        <td>${r.time}</td>
+        <td>${r.guests}</td>
+
+        <td>
+          ${
+            r.status === "cancelled"
+              ? '<span class="badge bg-danger">Cancelled</span>'
+              : '<span class="badge bg-success">Active</span>'
+          }
+        </td>
+
+        <td>
+          ${
+            r.status === "cancelled"
+              ? "-"
+              : `<button class="btn btn-sm btn-danger" onclick="cancelReservation(${r.id})">Cancel</button>`
+          }
+        </td>
+      `;
+
+      table.appendChild(tr);
+    });
+
+  } catch (err) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="7" class="text-danger text-center">
+          ❌ โหลดข้อมูลไม่สำเร็จ
+        </td>
+      </tr>
+    `;
+
+    document.getElementById("connection-status").innerText = "Disconnected";
+    console.error(err);
+  }
+}
+
+// ==========================
+// ❌ CANCEL
+// ==========================
+function cancelReservation(id) {
+  if (!confirm("ต้องการยกเลิกใช่ไหม?")) return;
+
+  fetch(`http://localhost:3000/cancel/${id}`, {
+    method: "POST"
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    loadReservations(); // รีโหลด
+  })
+  .catch(err => {
+    alert("❌ error");
+    console.error(err);
+  });
+}
+
+// ==========================
+// 🚀 START
+// ==========================
+loadReservations();
