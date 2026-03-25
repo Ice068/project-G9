@@ -186,3 +186,21 @@ app.post("/cancel/:id", (req, res) => {
 app.listen(3000, () => {
   console.log("🚀 Server running on http://localhost:3000");
 });
+// ==========================
+// ✅ LOGIN
+// ==========================
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (username === "admin" && password === "1234") {
+    return res.json({
+      success: true,
+      message: "✅ login สำเร็จ"
+    });
+  }
+
+  res.status(401).json({
+    success: false,
+    message: "❌ username หรือ password ไม่ถูกต้อง"
+  });
+});

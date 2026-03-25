@@ -1,96 +1,63 @@
-// ==========================
-// ✅ LOAD DATA
-// ==========================
-async function loadReservations() {
-  const table = document.getElementById("table-orders");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
 
-  try {
-    const res = await fetch("http://localhost:3000/data");
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    if (!res.ok) throw new Error("โหลดไม่ได้");
+</head>
+<body>
 
-    const data = await res.json();
+<div class="container mt-4">
 
-    table.innerHTML = "";
+<h2>Admin Dashboard</h2>
 
-    // 🔥 นับสถิติ
-    let totalOrders = data.length;
-    let totalUsers = new Set(data.map(r => r.email)).size;
+<span id="connection-status" class="badge bg-danger">Disconnected</span>
 
-    document.getElementById("stat-orders").innerText = totalOrders;
-    document.getElementById("stat-users").innerText = totalUsers;
+<div class="row mt-3">
+  <div class="col">
+    <h5>Total Users: <span id="stat-users">0</span></h5>
+  </div>
+  <div class="col">
+    <h5>Total Orders: <span id="stat-orders">0</span></h5>
+  </div>
+</div>
 
-    // connection status
-    document.getElementById("connection-status").innerText = "Connected";
-    document.getElementById("connection-status").classList.remove("bg-danger");
-    document.getElementById("connection-status").classList.add("bg-success");
+<!-- ✅ CHART -->
+<div class="row mt-4">
+  <div class="col">
+    <canvas id="lineChart"></canvas>
+  </div>
+  <div class="col">
+    <canvas id="barChart"></canvas>
+  </div>
+</div>
 
-    // 🔥 render table
-    data.forEach((r, i) => {
-      const tr = document.createElement("tr");
+<!-- ✅ TABLE -->
+<table class="table table-bordered mt-4">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Guests</th>
+    </tr>
+  </thead>
 
-      tr.innerHTML = `
-        <td>${i + 1}</td>
-        <td>${r.fullname}</td>
-        <td>${r.date}</td>
-        <td>${r.time}</td>
-        <td>${r.guests}</td>
+  <tbody id="table-orders">
+    <tr>
+      <td colspan="4" class="text-center">Loading...</td>
+    </tr>
+  </tbody>
+</table>
 
-        <td>
-          ${
-            r.status === "cancelled"
-              ? '<span class="badge bg-danger">Cancelled</span>'
-              : '<span class="badge bg-success">Active</span>'
-          }
-        </td>
+</div>
 
-        <td>
-          ${
-            r.status === "cancelled"
-              ? "-"
-              : `<button class="btn btn-sm btn-danger" onclick="cancelReservation(${r.id})">Cancel</button>`
-          }
-        </td>
-      `;
+<!-- ✅ ต้องมี -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
 
-      table.appendChild(tr);
-    });
-
-  } catch (err) {
-    table.innerHTML = `
-      <tr>
-        <td colspan="7" class="text-danger text-center">
-          ❌ โหลดข้อมูลไม่สำเร็จ
-        </td>
-      </tr>
-    `;
-
-    document.getElementById("connection-status").innerText = "Disconnected";
-    console.error(err);
-  }
-}
-
-// ==========================
-// ❌ CANCEL
-// ==========================
-function cancelReservation(id) {
-  if (!confirm("ต้องการยกเลิกใช่ไหม?")) return;
-
-  fetch(`http://localhost:3000/cancel/${id}`, {
-    method: "POST"
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-    loadReservations(); // รีโหลด
-  })
-  .catch(err => {
-    alert("❌ error");
-    console.error(err);
-  });
-}
-
-// ==========================
-// 🚀 START
-// ==========================
-loadReservations();
+</body>
+</html>
