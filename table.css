@@ -205,3 +205,16 @@ body::before{
         font-size:32px;
     }
 }
+
+/* ===== FIX SELECT DROPDOWN ===== */
+select.form-control {
+    background-color: black !important;
+    color: white !important;
+    border: 1px solid gold;
+}
+
+/* ตอนกดเลือก (dropdown) */
+select.form-control option {
+    background-color: white;
+    color: black;
+}
