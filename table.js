@@ -1,90 +1,71 @@
-let totalTables = 10
-let reservedTables = 0
+console.log("JS ทำงาน");
 
-document.getElementById("tableCount").innerText = totalTables
+window.onload = function () {
 
-/* จำกัดวันที่เลือก */
+  const form = document.getElementById("reservationForm");
 
-let today = new Date()
-let maxDate = new Date()
+  if (!form) {
+    console.error("❌ ไม่พบ form");
+    return;
+  }
 
-maxDate.setFullYear(today.getFullYear() + 1)
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    console.log("กดแล้ว");
 
-let dateInput = document.getElementById("date")
+    const fullname = document.getElementById("fullname").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const guests = document.getElementById("guests").value;
+    const note = document.getElementById("note").value;
 
-dateInput.min = today.toISOString().split("T")[0]
-dateInput.max = maxDate.toISOString().split("T")[0]
+    if (password !== confirmPassword) {
+      alert("❌ Password ไม่ตรงกัน");
+      return;
+    }
 
-document.getElementById("reservationForm").addEventListener("submit", function(e){
+    if (!fullname || !email || !password || !date || !time || !guests) {
+      alert("❌ กรุณากรอกข้อมูลให้ครบ");
+      return;
+    }
 
-e.preventDefault()
+    const data = {
+      fullname,
+      email,
+      password,
+      date,
+      time,
+      guests,
+      note
+    };
 
-let fullname = document.getElementById("fullname").value.trim()
-let email = document.getElementById("email").value.trim()
-let phone = document.getElementById("phone").value.trim()
-let date = document.getElementById("date").value
-let time = document.getElementById("time").value
-let guests = document.getElementById("guests").value
+    try {
+      const res = await fetch("http://localhost:3000/reserve", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
 
-let selectedYear = new Date(date).getFullYear()
-let currentYear = new Date().getFullYear()
+      const result = await res.json();
 
-/* ตรวจสอบข้อมูลว่าง */
+      // 🔥 ตรงนี้คือหัวใจ
+      if (!res.ok) {
+        alert(result.message); // ❌ ซ้ำ → แจ้งเตือน
+        return;
+      }
 
-if(!fullname || !email || !phone || !date || !time || !guests){
-alert("Please fill in all fields")
-return
-}
+      alert("✅ จองสำเร็จ!");
 
-/* ตรวจสอบ email format */
+    } catch (error) {
+      console.error("❌ ERROR:", error);
+      alert("❌ เกิดข้อผิดพลาด");
+    }
 
-let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-if(!email.match(emailPattern)){
-alert("Please enter a valid email address")
-return
-}
+  });
 
-/* ป้องกันจองย้อนหลัง */
-
-if(date < today.toISOString().split("T")[0]){
-alert("Cannot reserve past dates")
-return
-}
-
-/* ป้องกันปีเกิน */
-
-if(selectedYear > currentYear + 1){
-alert("Reservation year is too far in the future")
-return
-}
-
-/* จำกัดเวลาเปิดร้าน */
-
-if(time < "10:00" || time > "22:00"){
-alert("Reservation time must be between 10:00 - 22:00")
-return
-}
-
-/* จำกัดจำนวนคน */
-
-if(guests > 10){
-alert("Maximum 10 guests per table")
-return
-}
-
-/* เช็คโต๊ะว่าง */
-
-if(reservedTables >= totalTables){
-alert("Sorry, all tables are fully booked")
-return
-}
-
-/* ทำการจอง */
-
-reservedTables++
-
-document.getElementById("tableCount").innerText = totalTables - reservedTables
-
-alert("Reservation Confirmed!")
-
-})
+};
