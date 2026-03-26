@@ -19,13 +19,17 @@
 
 
 ## ผลงานการออกแบบ
+
 1. System Architecture
+---
+
 1.Frontend 
 ทำหน้าที่:
        แสดงข้อมูลโต๊ะ
        กรอกข้อมูลจอง
        ส่ง request ไป API
        แสดงหน้า Map
+
 2.Backend
 ทำหน้าที่:
       รับ request จาก frontend
@@ -35,6 +39,7 @@
 3.Database
 ทำหน้าที่: 
        เก็บ reservations
+
 
 2. Use case diagram
 ![alt text](img/usecasediagram.png)
