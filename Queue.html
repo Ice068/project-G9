@@ -103,20 +103,19 @@
     <script src="script.js"></script>
     
     <script>
-        // ฟังก์ชันนำข้อมูลมาสร้างแถวในตาราง (เหมือนเดิม แต่รอรับ Data จริง)
+        const bookingData = [
+            { id: "B-1001", name: "สมชาย ใจดี", startDate: "2026-03-25", endDate: "2026-03-28", guests: 2, email: "somchai@email.com" },
+            { id: "B-1002", name: "หญิงลักษณ์ นามสมมติ", startDate: "2026-04-01", endDate: "2026-04-03", guests: 4, email: "yingluk@email.com" },
+            { id: "B-1003", name: "ธนภัทร รักษ์โลก", startDate: "2026-04-10", endDate: "2026-04-15", guests: 1, email: "thanapat@email.com" },
+            { id: "B-1004", name: "จอห์น โด", startDate: "2026-04-12", endDate: "2026-04-14", guests: 3, email: "john.doe@email.com" },
+            { id: "B-1005", name: "มานี มีนา", startDate: "2026-05-01", endDate: "2026-05-05", guests: 2, email: "manee@email.com" }
+        ];
+
         function loadBookingTable(data) {
             const tbody = document.getElementById('booking-table-body');
             if (!tbody) return;
-            
-            tbody.innerHTML = ''; // ล้างข้อความ "กำลังโหลดข้อมูล..."
+            tbody.innerHTML = ''; 
 
-            // เช็กว่าถ้าไม่มีข้อมูลใน Database เลย ให้แสดงข้อความแจ้งเตือน
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">ไม่มีข้อมูลการจองในระบบ</td></tr>';
-                return;
-            }
-
-            // ถ้ามีข้อมูล ก็วนลูปสร้างตารางปกติ
             data.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -137,43 +136,12 @@
             });
         }
 
-        // ==========================================
-        // จุดเชื่อมต่อกับ Database 
-        // ==========================================
-        async function fetchBookingsFromDB() {
-            try {
-                /* === วิธีใช้งานจริงเมื่อมี Database (เช่นใช้ PHP) ===
-                  1. สร้างไฟล์ PHP เช่น get_bookings.php ให้คืนค่าเป็น JSON
-                  2. เอาเครื่องหมาย // ด้านล่างออก เพื่อใช้งาน
-                */
-                
-                // const response = await fetch('api/get_bookings.php'); // แก้ path ให้ตรงกับไฟล์ Backend ของคุณ
-                // const data = await response.json();
-                
-                // ตอนนี้ผมตั้งค่าตัวแปร data เป็น Array ว่างไปก่อน เพื่อให้ตารางลบข้อมูลเก่าออกให้หมด
-                const data = []; 
-                
-                loadBookingTable(data);
-                
-            } catch (error) {
-                console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
-                document.getElementById('booking-table-body').innerHTML = '<tr><td colspan="6" class="text-center text-danger py-3">เกิดข้อผิดพลาดในการดึงข้อมูลจากฐานข้อมูล</td></tr>';
-            }
-        }
+        function deleteBooking(id) { if(confirm(`คุณต้องการลบการจองรหัส ${id} ใช่หรือไม่?`)) alert("ลบข้อมูลสำเร็จ"); }
+        function editBooking(id) { alert(`กำลังเปิดฟอร์มแก้ไข: ${id}`); }
+        function completeBooking(id) { alert(`อัปเดตสถานะ ${id} เรียบร้อย`); }
 
-        // ฟังก์ชันปุ่มต่างๆ (เตรียมไว้รอต่อกับ Backend เช่นกัน)
-        function deleteBooking(id) { 
-            if(confirm(`คุณต้องการลบการจองรหัส ${id} ใน Database ใช่หรือไม่?`)) {
-                // อนาคตใส่คำสั่ง fetch ส่งค่าไปลบที่ PHP ตรงนี้
-                console.log("Delete ID:", id); 
-            }
-        }
-        function editBooking(id) { alert(`เตรียมเปิดหน้าต่างแก้ไขข้อมูล ID: ${id}`); }
-        function completeBooking(id) { alert(`เตรียมอัปเดตสถานะ ID: ${id} ใน Database`); }
-
-        // เมื่อโหลดหน้าเว็บเสร็จ ให้เรียกฟังก์ชันดึงข้อมูลทันที
         document.addEventListener('DOMContentLoaded', () => {
-            fetchBookingsFromDB();
+            loadBookingTable(bookingData);
         });
     </script>
 </body>
