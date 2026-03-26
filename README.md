@@ -50,6 +50,9 @@
 
 
 5. UX/UI
+
+## Customer
+
 ### Homepage
 ![alt text](img/Homepage.jpg)
 
@@ -64,6 +67,18 @@
 
 ### ที่อยู่
 ![alt text](<img/Vist us.jpg>)
+
+## Admin
+
+### admin dashboard
+![alt text](img/Dashborad.png)
+
+### Manage Queue
+![alt text](<img/Manage Queue.png>)
+
+### Manage Customer
+![alt text](<img/Manage Customer.png>)
+
 
 ## Teach Stack
 
