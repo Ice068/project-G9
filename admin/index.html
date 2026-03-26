@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap 5 Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <a href="#">Admin Dashboard</a>
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">Tools & Components</li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link"><i class='bx bx-sliders pe-2'></i> Dashboard</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link"><i class='bx bx-user pe-2'></i> Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <button class="btn" type="button" data-bs-theme="dark" id="sidebar-toggle">
+                    <i class='bx bx-menu fs-4'></i>
+                </button>
+                
+                <div class="navbar-collapse navbar">
+                    <ul class="navbar-nav ms-auto"> <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=random" class="avatar img-fluid rounded-circle" alt="profile" style="width: 40px;">
+                                </a>
+                                            <div class="dropdown-menu dropdown-menu-end shadow border-0" style="min-width: 150px;">
+                                        <a href="#" class="dropdown-item"><i class='bx bx-user me-2'></i> Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item text-danger" id="btnLogout"><i class='bx bx-log-out me-2'></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold mb-0">Admin Dashboard</h4>
+                        <span id="connection-status" class="badge bg-danger rounded-pill px-3 py-2">Disconnected</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-3 mb-3">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted">Total Users</h6>
+                                        <h3 class="fw-bold mb-0" id="stat-users">0</h3>
+                                    </div>
+                                    <div class="fs-1 text-primary"><i class='bx bx-group'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted">Total Revenue</h6>
+                                        <h3 class="fw-bold mb-0" id="stat-revenue">$0</h3>
+                                    </div>
+                                    <div class="fs-1 text-success"><i class='bx bx-dollar-circle'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted">Total Orders</h6>
+                                        <h3 class="fw-bold mb-0" id="stat-orders">0</h3>
+                                    </div>
+                                    <div class="fs-1 text-warning"><i class='bx bx-cart'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted">Visitors</h6>
+                                        <h3 class="fw-bold mb-0" id="stat-visitors">0</h3>
+                                    </div>
+                                    <div class="fs-1 text-danger"><i class='bx bx-show'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header bg-white"><h6 class="mb-0 fw-bold">Revenue Overview</h6></div>
+                                <div class="card-body"><canvas id="lineChart"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header bg-white"><h6 class="mb-0 fw-bold">Monthly Sales</h6></div>
+                                <div class="card-body"><canvas id="barChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header bg-white"><h6 class="mb-0 fw-bold">Recent Orders</h6></div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Order ID</th>
+                                                    <th scope="col">Customer</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table-orders">
+                                                <tr><td colspan="4" class="text-center text-muted py-3">Waiting for data...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
