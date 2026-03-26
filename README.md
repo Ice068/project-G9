@@ -15,7 +15,7 @@
 ---
 
 ## SRS
-นำการจัดการร้านอาหาร --> พัฒนาการการจองโต๊ะล่วงหน้า
+การจัดการร้านอาหาร --> พัฒนาการการจองโต๊ะล่วงหน้า
 
 
 ## ผลงานการออกแบบ
@@ -42,7 +42,7 @@
 
 
 3. Activity Diagram
-![alt text](activitydiagram.png)
+![alt text](img/Gemini_Generated_Image_i5zlbwi5zlbwi5zl.png)
 
 
 4. ER Diagram
