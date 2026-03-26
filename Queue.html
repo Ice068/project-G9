@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Queue - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <a href="#">Admin Dashboard</a>
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">Tools & Components</li>
+                    
+                    <li class="sidebar-item">
+                        <a href="index.html" class="sidebar-link">
+                            <i class='bx bx-sliders pe-2'></i> Dashboard
+                        </a>
+                    </li>
+                    
+                    <li class="sidebar-item">
+                        <a href="Queue.html" class="sidebar-link active">
+                            <i class='bx bx-calendar-check pe-2'></i> Manage Queue
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="customers.html" class="sidebar-link active">
+                            <i class='bx bx-calendar-check pe-2'></i> Manage Customers
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <button class="btn" type="button" data-bs-theme="dark" id="sidebar-toggle">
+                    <i class='bx bx-menu fs-4'></i>
+                </button>
+                <div class="navbar-collapse navbar">
+                    <ul class="navbar-nav ms-auto"> 
+                        <li class="nav-item dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                <img src="https://ui-avatars.com/api/?name=Admin+User&background=random" class="avatar img-fluid rounded-circle" alt="profile" style="width: 40px;">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end shadow border-0" style="min-width: 150px;">
+                                <a href="#" class="dropdown-item"><i class='bx bx-user me-2'></i> Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item text-danger" id="btnLogout"><i class='bx bx-log-out me-2'></i> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold mb-0">Manage Queue</h4>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header bg-white">
+                                    <h6 class="mb-0 fw-bold">ระบบจัดการการจอง</h6>
+                                </div>
+                                <div class="card-body p-0"> 
+                                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                                        <table class="table table-hover table-bordered mb-0 align-middle">
+                                            <thead class="table-light position-sticky top-0" style="z-index: 1;">
+                                                <tr>
+                                                    <th scope="col" class="text-nowrap">ID</th>
+                                                    <th scope="col" class="text-nowrap">ชื่อ</th>
+                                                    <th scope="col" class="text-nowrap">เวลาจอง - สิ้นสุด</th>
+                                                    <th scope="col" class="text-nowrap text-center">จำนวนลูกค้า</th>
+                                                    <th scope="col" class="text-nowrap text-center">หมายเหตุ</th>
+                                                    <th scope="col" class="text-nowrap text-center">จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="booking-table-body">
+                                                <tr><td colspan="6" class="text-center text-muted py-3">กำลังโหลดข้อมูล...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // ฟังก์ชันนำข้อมูลมาสร้างแถวในตาราง (เหมือนเดิม แต่รอรับ Data จริง)
+        function loadBookingTable(data) {
+            const tbody = document.getElementById('booking-table-body');
+            if (!tbody) return;
+            
+            tbody.innerHTML = ''; // ล้างข้อความ "กำลังโหลดข้อมูล..."
+
+            // เช็กว่าถ้าไม่มีข้อมูลใน Database เลย ให้แสดงข้อความแจ้งเตือน
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">ไม่มีข้อมูลการจองในระบบ</td></tr>';
+                return;
+            }
+
+            // ถ้ามีข้อมูล ก็วนลูปสร้างตารางปกติ
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="fw-bold">${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.startDate} <span class="text-muted mx-1">ถึง</span> ${item.endDate}</td>
+                    <td class="text-center">${item.guests}</td>
+                    <td>${item.email}</td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-sm btn-danger" onclick="deleteBooking('${item.id}')"><i class='bx bx-trash'></i></button>
+                            <button class="btn btn-sm btn-warning text-white" onclick="editBooking('${item.id}')"><i class='bx bx-edit-alt'></i></button>
+                            <button class="btn btn-sm btn-success" onclick="completeBooking('${item.id}')"><i class='bx bx-check'></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ==========================================
+        // จุดเชื่อมต่อกับ Database 
+        // ==========================================
+        async function fetchBookingsFromDB() {
+            try {
+                /* === วิธีใช้งานจริงเมื่อมี Database (เช่นใช้ PHP) ===
+                  1. สร้างไฟล์ PHP เช่น get_bookings.php ให้คืนค่าเป็น JSON
+                  2. เอาเครื่องหมาย // ด้านล่างออก เพื่อใช้งาน
+                */
+                
+                // const response = await fetch('api/get_bookings.php'); // แก้ path ให้ตรงกับไฟล์ Backend ของคุณ
+                // const data = await response.json();
+                
+                // ตอนนี้ผมตั้งค่าตัวแปร data เป็น Array ว่างไปก่อน เพื่อให้ตารางลบข้อมูลเก่าออกให้หมด
+                const data = []; 
+                
+                loadBookingTable(data);
+                
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+                document.getElementById('booking-table-body').innerHTML = '<tr><td colspan="6" class="text-center text-danger py-3">เกิดข้อผิดพลาดในการดึงข้อมูลจากฐานข้อมูล</td></tr>';
+            }
+        }
+
+        // ฟังก์ชันปุ่มต่างๆ (เตรียมไว้รอต่อกับ Backend เช่นกัน)
+        function deleteBooking(id) { 
+            if(confirm(`คุณต้องการลบการจองรหัส ${id} ใน Database ใช่หรือไม่?`)) {
+                // อนาคตใส่คำสั่ง fetch ส่งค่าไปลบที่ PHP ตรงนี้
+                console.log("Delete ID:", id); 
+            }
+        }
+        function editBooking(id) { alert(`เตรียมเปิดหน้าต่างแก้ไขข้อมูล ID: ${id}`); }
+        function completeBooking(id) { alert(`เตรียมอัปเดตสถานะ ID: ${id} ใน Database`); }
+
+        // เมื่อโหลดหน้าเว็บเสร็จ ให้เรียกฟังก์ชันดึงข้อมูลทันที
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchBookingsFromDB();
+        });
+    </script>
+</body>
+</html>
