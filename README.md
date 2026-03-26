@@ -57,10 +57,7 @@
 ![alt text](img/Table.jpg)
 
 ### ประวัติ
-![alt text](img/Hsitory.jpg)
-
-### History in
-![alt text](img/History_con.jpg)
+![alt text](image.png)
 
 ### ตัวอย่างเมนู
 ![alt text](img/Dining.jpg)
