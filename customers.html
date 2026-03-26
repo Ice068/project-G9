@@ -138,17 +138,16 @@
         // ==========================================
         async function fetchCustomersFromDB() {
             try {
-                // ตัวอย่างจำลองข้อมูล ถ้าอยากทดสอบว่าตารางขึ้นไหม ให้ลองเอา // ออกจากโค้ดชุดด้านล่าง
-                /*
+                // ข้อมูลจำลอง (Mockup Data) สำหรับทดสอบหน้าตาตาราง
                 const data = [
                     { id: "C-001", name: "สมชาย ใจดี", email: "somchai@email.com", password: "123" },
-                    { id: "C-002", name: "มานี มีนา", email: "manee@email.com", password: "abc" }
+                    { id: "C-002", name: "มานี มีนา", email: "manee@email.com", password: "abc" },
+                    { id: "C-003", name: "ธนภัทร รักษ์โลก", email: "thanapat@email.com", password: "xyz" },
+                    { id: "C-004", name: "จอห์น โด", email: "john.doe@email.com", password: "456" },
+                    { id: "C-005", name: "สมหญิง รักเรียน", email: "somying@email.com", password: "789" }
                 ];
-                */
                 
-                // ตอนนี้ตั้งค่าเป็น Array ว่าง เพื่อให้ตารางว่างเปล่า รอรับ Database
-                const data = []; 
-                
+                // นำข้อมูลไปสร้างตาราง
                 loadCustomerTable(data);
                 
             } catch (error) {
@@ -156,7 +155,6 @@
                 document.getElementById('customer-table-body').innerHTML = '<tr><td colspan="5" class="text-center text-danger py-3">เกิดข้อผิดพลาดในการดึงข้อมูลจากฐานข้อมูล</td></tr>';
             }
         }
-
         // ฟังก์ชันเมื่อกดปุ่ม Edit
         function editCustomer(id) { 
             alert(`เตรียมเปิดหน้าต่างแก้ไขข้อมูลของ ID: ${id}`); 
