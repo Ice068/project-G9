@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
 
-            const response = await fetch("http://localhost:3000/api/history", {
+            const response = await fetch("http://localhost:3000/api/reservations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

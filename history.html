@@ -56,7 +56,7 @@
       const errorEl = document.getElementById('errorMsg');
 
       try {
-        const res = await fetch('http://localhost:3000/data');
+        const res = await fetch('http://localhost:3000/api/reservations');
         if (!res.ok) throw new Error('Response status ' + res.status);
 
         const rows = await res.json();
@@ -128,8 +128,8 @@
     function cancelReservation(id) {
       if (!confirm("ต้องการยกเลิกการจองใช่ไหม?")) return;
 
-      fetch(`http://localhost:3000/cancel/${id}`, {
-        method: "POST"
+      fetch(`http://localhost:3000/api/reservations/${id}`, {
+        method: "DELETE"
       })
       .then(res => res.json())
       .then(data => {

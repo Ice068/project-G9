@@ -43,7 +43,7 @@ window.onload = function () {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/reserve", {
+      const res = await fetch("http://localhost:3000/api/reservations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

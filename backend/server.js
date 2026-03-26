@@ -11,16 +11,29 @@ app.use(express.json());
 // Mock Database (เก็บใน memory)
 // ============================
 
+// ============================
+// Mock Database (เก็บใน memory)
+// ============================
 let reservations = [
     {
         id: 1,
-        name: "Table for 2",
-        price: 1200
+        fullname: "สมชาย ใจดี",
+        email: "somchai@gmail.com",
+        date: "27/03/2026",
+        time: "18:00",
+        guests: 2,
+        note: "ขอโต๊ะริมหน้าต่าง",
+        status: "active"
     },
     {
         id: 2,
-        name: "Table for 4",
-        price: 2000
+        fullname: "สมหญิง รักเรียน",
+        email: "somying@gmail.com",
+        date: "28/03/2026",
+        time: "19:30",
+        guests: 4,
+        note: "แพ้อาหารทะเล",
+        status: "active"
     }
 ];
 
@@ -36,17 +49,31 @@ app.get("/api/reservations", (req, res) => {
 // POST - เพิ่มการจอง
 // ============================
 
+// ============================
+// POST - เพิ่มการจอง
+// ============================
 app.post("/api/reservations", (req, res) => {
-
     const newReservation = req.body;
 
-    if (!newReservation.name || !newReservation.price) {
-        return res.status(400).json({ message: "Invalid data" });
-    }
+    // สร้าง ID ใหม่
+    const newId = reservations.length > 0 ? Math.max(...reservations.map(r => r.id)) + 1 : 1;
 
-    reservations.push(newReservation);
+    // จัดเรียงข้อมูลให้ตรงกับที่หน้า History ต้องการ
+    const formattedData = {
+        id: newId,
+        fullname: newReservation.fullname || "(ไม่มีชื่อ)",
+        email: newReservation.email || "-",
+        date: newReservation.date || "-",
+        time: newReservation.time || "-",
+        guests: newReservation.guests || "-",
+        note: newReservation.note || "", 
+        status: "active"
+    };
 
-    res.json({ message: "Reservation added" });
+    // บันทึกลงตัวแปร reservations
+    reservations.push(formattedData);
+
+    res.json({ message: "จองโต๊ะสำเร็จเรียบร้อย!" });
 });
 
 // ============================
