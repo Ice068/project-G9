@@ -43,6 +43,22 @@ function createTables() {
     visited_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
+  db.run(`CREATE TABLE IF NOT EXISTS queues (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  time TEXT,
+  people INTEGER,
+  note TEXT,
+  status TEXT DEFAULT 'waiting'
+  )`);
+
+  db.run(`CREATE TABLE IF NOT EXISTS customers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  email TEXT,
+  password TEXT
+)`);
+
   // Insert sample data
   insertSampleData();
 }
@@ -140,6 +156,20 @@ app.get('/dashboard', (req, res) => {
 // test route
 app.get('/test', (req, res) => {
   res.send('OK');
+});
+
+app.get('/customers', (req, res) => {
+  db.all('SELECT * FROM customers', (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.get('/queue', (req, res) => {
+  db.all('SELECT * FROM queue', (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
 });
 
 app.listen(3000, () => {
