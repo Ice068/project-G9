@@ -37,7 +37,7 @@
        เก็บ reservations
 
 2. Use case diagram
-![alt text](usecasediagram.png)
+![alt text](img/usecasediagram.png)
 
 
 
@@ -60,7 +60,7 @@
 ![alt text](img/Table.jpg)
 
 ### ประวัติ
-![alt text](image.png)
+
 
 ### ตัวอย่างเมนู
 ![alt text](img/Dining.jpg)
