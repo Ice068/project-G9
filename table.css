@@ -96,7 +96,7 @@ body::before{
 
 .back-btn:hover{
     background:gold;
-    color:black;
+    color:rgb(98, 97, 97);
 }
 
 /* ===== Navbar ===== */
@@ -185,7 +185,7 @@ body::before{
 @media(max-width:991px){
 
     .custom-navbar{
-        background:black;
+        background:rgb(159, 157, 157);
     }
 
     .menu-link{
