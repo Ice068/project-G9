@@ -96,6 +96,10 @@
 
  ## Test  case ของระบบ และผลการทดสอบระบบในส่วนที่พัฒนา, API Testing
 
+ ![alt text](image.png)
+
+ ![alt text](image-1.png)
+
  ## API End-Point
 - admin : 
 
